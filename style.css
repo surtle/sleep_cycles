@@ -4,7 +4,7 @@
 body {
 	background-color: #001848;
 	padding-right: 50px; 
-	padding-top: 50px;
+	padding-top: 25px;
 	padding-left: 50px;
 	padding-bottom: 50px;
 	margin-right: 50px;
@@ -12,18 +12,49 @@ body {
 
 h1 {
 	font-family: 'Sanchez', serif; 
-	color: #604878;
+	color: #b894b8;
 	text-align: center; 
 	font-weight: bold; 
-	font-size: 48px; 
+	font-size: 40px; 
 	text-shadow: 0px 0px 5px #906090;
 }
 
 p {
 	font-family: 'Quicksand', sans-serif;
 	color: white; 
+	font-weight: bold;
+	font-size: 20px; 
+	text-shadow: 0px 0px 4px #eee;
 }
 
-button {
+.button {
 	display: inline;
+	border-radius: 5px;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #301860;
+	background-color: #483078;
+	color: white; 
+	text-align: center; 
+	font-size: 15px; 
+	font-family: 'Quicksand', sans-serif;
+	font-weight: bold; 
+	padding: 10px; 
+	cursor: pointer; 
+	margin: 10px;
+}
+
+.button:active {
+	background-color: #301860;
+}
+
+.button:hover span { 
+	transition: 0.5s; 
+	text-shadow: 0px 0px 4px #eee;
+}
+
+.button:hover span:after {
+	opacity: 1;
+	text-shadow: none;
+	transition: 0.5s;
 }
