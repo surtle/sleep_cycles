@@ -11,17 +11,75 @@
 	<link rel="stylesheet" type="text/css" href="style.css">
 	
     <h1>Sleep Cycles & A Clever Title</h1>
+	<p class="caption">Know when to wake up? This page allows you to find optimal times to wake up or 
+		sleep while taking into consideration the current time.</p>
 
   </head>
   <body>
     
-    <p style ="text-align: center">What would you like to do?</p>
-	<div id = "buttons" align="center">
-		<button class="button"><span>Find Optimal Sleep Times</span></button>
-		<button class="button"><span>Find Optimal Wake Times</span></button>
+	<div class = "block">
+		<p style ="text-align: center">What would you like to do?</p>
+		<div id = "buttons" align="center">
+			<button class="button" id="sleepButton" onclick="showTimeSelection();"><span>Find Optimal Sleep Times</span></button>
+			<button class="button" id="wakeButton"><span>Find Optimal Wake Times</span></button>
+		</div>
+	</div>
+	
+	<div id = "timeSelection">
+		<p>When would you like to wake up by?</p>
+		<select name="hour">
+			<option>1</option>
+			<option>2</option>
+			<option>3</option>
+			<option>4</option>
+			<option>5</option>
+			<option>6</option>
+			<option>7</option>
+			<option>8</option>
+			<option>9</option>
+			<option>10</option>
+			<option>11</option>
+			<option>12</option>
+		</select> 
+		
+		<select name="minute">
+			<option>00</option>
+			<option>05</option>
+			<option>10</option>
+			<option>15</option>
+			<option>20</option>
+			<option>25</option>
+			<option>30</option>
+			<option>35</option>
+			<option>40</option>
+			<option>45</option>
+			<option>50</option>
+			<option>55</option>
+		</select>
+		
+		<select name="pod">
+			<option>AM</option>
+			<option>PM</option>
+		</select>
+		
+		<button class="button" id="submit"><span>Submit</span></button>
+	</div>
+	
+	<div class = "output">
+		<div id = "sleepTimes">
+			<p> yo </p>
+		</div>
+	</div>
+	
+	<div class = "output">
+		<div id = "wakeTimes">
+			<p> yo </p>
+		</div>
 	</div>
 	
   </body>
 
   <!-- JS -->
+  <script src = "innards.js"></script>
+  
  </html>
