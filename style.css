@@ -58,7 +58,7 @@ select:not(:hover) {
 }
 
 p#times {
-	box-shadow: 0px 0px 5px #001133;
+	box-shadow: 0px 0px 9px #001133;
 }
 
 div#sleepTimes {

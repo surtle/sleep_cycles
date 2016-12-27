@@ -5,6 +5,8 @@ var MINS_IN_DAY = 1440;
 var MINS_TO_SLEEP = 15;
 var HOURS_IN_DAY = 24;
 var SLEEP_CYCLE = 90; 
+var MAX_CYCLES = 13;
+var NOON = 12;
 
 // buttons
 var sleep = document.getElementById('sleepButton');
@@ -118,7 +120,7 @@ function calculateSleepTimes() {
 	} 
 	
 	else {
-		while( calculatedSleepTime < amountOfSleep && numOfCycles < 12 ) {
+		while( calculatedSleepTime < amountOfSleep && numOfCycles < MAX_CYCLES ) {
 			if( numOfCycles > 1 ) {
 				stringOutput += ' <li class="list-group-item"> ' + convertToTime( sleepTime ) + '</li>';
 			}
@@ -170,7 +172,7 @@ function calculateWakeTimes() {
 	// recalculates if current time is now over 24 hrs
 	if( currentTimeAsMins >= MINS_IN_DAY ) {
 		currentTimeAsMins = currTimeAsMins - MINS_IN_DAY; 
-		inputPod = togglePod( inputPod );
+	
 	}
 	
 	// gets input time
@@ -183,14 +185,19 @@ function calculateWakeTimes() {
 		amountOfSleep = inputTimeAsMins - currentTimeAsMins; 
 	}
 	
-	while( calculatedSleepTime < amountOfSleep && numOfCycles < 12 ) {
+	if( amountOfSleep < SLEEP_CYCLE ) {
+		document.getElementById("output-title").innerHTML = 
+			'Not enough time for at least one sleep cycle :-('; 
+	}
+	
+	while( calculatedSleepTime < amountOfSleep && numOfCycles < MAX_CYCLES ) {
 		if( numOfCycles > 1 ) {
 			stringOutput += '<li class="list-group-item"> ' + convertToTime( wakeTime ) + '</li>';
 		}
 		
 		wakeTime = currentTimeAsMins + ( numOfCycles * SLEEP_CYCLE ); 
 		
-		// reconfigures wakeTime if it is over 24 hrs
+		/* // reconfigures wakeTime if it is over 24 hrs
 		if( wakeTime >= MINS_IN_DAY ) {
 			wakeTime = wakeTime - MINS_IN_DAY;
 		}
@@ -199,7 +206,9 @@ function calculateWakeTimes() {
 				calculatedSleepTime = ( MINS_IN_DAY - wakeTime ) + inputTimeAsMins;
 		} else {
 				calculatedSleepTime = wakeTime - inputTimeAsMins;
-		}
+		} */
+		
+		calculatedSleepTime = wakeTime - currentTimeAsMins;
 			
 		numOfCycles++;
 	}
@@ -214,35 +223,45 @@ function convertToMins( hour, minute ) {
 
 function convertToTime( mins ) {
 	
+	var d = new Date();
+	var currentHour = d.getHours();
+	
 	var hour = Math.floor(mins / MINS_IN_HOUR);
 	var min = mins % MINS_IN_HOUR; 
 	var pod = document.getElementById("pod").value; 
-	if( hour < 12 && pod != "AM" ) {
+	
+	if( hour < NOON && pod != "AM" ) {
 		pod = togglePod ( pod );
 	}
 	
 	if( mode == 0 ) {
-		if( hour > 12 ) {
-			hour = hour - 12; 
+		if( hour > NOON ) {
+			hour = hour - NOON; 
 			
 			if( pod != "PM" ) {
 				pod = togglePod( pod );
 			}
 		}
-	} else {
-		if( hour > 12 ) { 
-			hour = hour - 12;
-			pod = togglePod( pod );
-			
-			
-		}
-	}
-	
-	if( hour <= 0 ) {
-		hour = 12 + hour
 		
-		if( hour < 0 ) {
-			pod = togglePod( pod ); 
+		if( hour <= 0 ) {
+		hour = NOON + hour
+		
+			if( hour < 0 ) {
+				pod = togglePod( pod ); 
+			}
+		}
+	} else {
+		
+		if( currentHour >= NOON ) {
+			pod = "PM";
+		}
+		
+		while( hour > NOON ) {
+			hour = hour - NOON;
+
+			if( hour >= NOON ) {
+				pod = togglePod( pod );
+			}
 		}
 	}
 	
@@ -265,12 +284,12 @@ function getInputTime() {
 	inPod = document.getElementById("pod").value;
 	
 	// if PM was selected
-	if( inPod == "PM" && inHour < 12 ) {
-		inHour += 12;
+	if( inPod == "PM" && inHour < NOON ) {
+		inHour += NOON;
 	}
 	
-	// if 12AM
-	if( inPod == "AM" && inHour == 12 ) {
+	// if NOONAM
+	if( inPod == "AM" && inHour == NOON ) {
 		inHour = 0;
 	}
 	
