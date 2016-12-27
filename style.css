@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Sanchez');
+@import url('https://fonts.googleapis.com/css?family=Sansita+One');
 @import url('https://fonts.googleapis.com/css?family=Quicksand');
 
 body {
@@ -11,12 +12,12 @@ body {
 }
 
 h1 {
-	font-family: 'Sanchez', serif; 
-	color: #b894b8;
+	font-family: 'Sansita One', serif; 
+	color: #e0d1e0;
 	text-align: center; 
 	font-weight: bold; 
-	font-size: 40px; 
-	text-shadow: 0px 0px 5px #906090;
+	font-size: 50px; 
+	text-shadow: 0px 0px 6px #c2a3c2;
 }
 
 h5 {
@@ -34,6 +35,18 @@ p {
 	font-weight: bold;
 	font-size: 20px; 
 	text-shadow: 0px 0px 4px #eee;
+}
+
+a {
+	font-family: 'Quicksand', sans-serif;
+	color: #906090;
+	text-decoration: underline;
+}
+
+a:hover {
+	font-style: oblique;
+	transition: 0.5s;
+	color: white;
 }
 
 select {
