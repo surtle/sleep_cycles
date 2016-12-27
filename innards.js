@@ -117,6 +117,7 @@ function calculateSleepTimes() {
 	if( amountOfSleep < SLEEP_CYCLE ) {
 		document.getElementById("output-title").innerHTML = 
 			'Not enough time for at least one sleep cycle :-('; 
+		document.getElementById("times").innerHTML = '';
 	} 
 	
 	else {
@@ -140,6 +141,7 @@ function calculateSleepTimes() {
 				calculatedSleepTime = inputTimeAsMins - sleepTime;
 			}
 			
+			// increments number of cycles
 			numOfCycles += 1; 
 			
 		}
@@ -188,29 +190,21 @@ function calculateWakeTimes() {
 	if( amountOfSleep < SLEEP_CYCLE ) {
 		document.getElementById("output-title").innerHTML = 
 			'Not enough time for at least one sleep cycle :-('; 
+		document.getElementById("times").innerHTML = '';
 	}
 	
-	while( calculatedSleepTime < amountOfSleep && numOfCycles < MAX_CYCLES ) {
-		if( numOfCycles > 1 ) {
-			stringOutput += '<li class="list-group-item"> ' + convertToTime( wakeTime ) + '</li>';
-		}
-		
-		wakeTime = currentTimeAsMins + ( numOfCycles * SLEEP_CYCLE ); 
-		
-		/* // reconfigures wakeTime if it is over 24 hrs
-		if( wakeTime >= MINS_IN_DAY ) {
-			wakeTime = wakeTime - MINS_IN_DAY;
-		}
-		
-		if( wakeTime < inputTimeAsMins ) {
-				calculatedSleepTime = ( MINS_IN_DAY - wakeTime ) + inputTimeAsMins;
-		} else {
-				calculatedSleepTime = wakeTime - inputTimeAsMins;
-		} */
-		
-		calculatedSleepTime = wakeTime - currentTimeAsMins;
+	else {
+		while( calculatedSleepTime < amountOfSleep && numOfCycles < MAX_CYCLES ) {
+			if( numOfCycles > 1 ) {
+				stringOutput += '<li class="list-group-item"> ' + convertToTime( wakeTime ) + '</li>';
+			}
 			
-		numOfCycles++;
+			wakeTime = currentTimeAsMins + ( numOfCycles * SLEEP_CYCLE ); 
+			 
+			calculatedSleepTime = wakeTime - currentTimeAsMins;
+				
+			numOfCycles++;
+		}
 	}
 	
 	// adds times to div element
@@ -235,6 +229,8 @@ function convertToTime( mins ) {
 	}
 	
 	if( mode == 0 ) {
+		
+		// toggles part of day if past noon
 		if( hour > NOON ) {
 			hour = hour - NOON; 
 			
@@ -243,13 +239,20 @@ function convertToTime( mins ) {
 			}
 		}
 		
+		// accounts for negative hours
 		if( hour <= 0 ) {
-		hour = NOON + hour
+			hour = NOON + hour
 		
 			if( hour < 0 ) {
 				pod = togglePod( pod ); 
 			}
 		}
+		
+		// accounts for negative minutes
+		if( min < 0 ) {
+			min = MINS_IN_HOUR + min
+		}
+	
 	} else {
 		
 		if( currentHour >= NOON ) {
@@ -265,10 +268,7 @@ function convertToTime( mins ) {
 		}
 	}
 	
-	if( min < 0 ) {
-		min = 60 + min
-	}
-	
+	// returns a string version of the time
 	if( min < 10 ) {
 		return hour + " : 0" + min + " " + pod;
 	} else {
@@ -294,7 +294,6 @@ function getInputTime() {
 	}
 	
 	return convertToMins( inHour, inMin );
-	
 }
 
 function togglePod( inputPod ) {
@@ -302,12 +301,6 @@ function togglePod( inputPod ) {
 		return "PM";
 	} else {
 		return "AM";
-	}
-}
-
-var showTimeSelection = function() {
-	if(timeSelection.style.display !== 'inline-block') {
-		div.style.display = 'inline-block';
 	}
 };
 

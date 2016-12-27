@@ -136,7 +136,7 @@ div#output {
 
 .button:hover span { 
 	transition: 0.5s; 
-	text-shadow: 0px 0px 4px #eee;
+	text-shadow: 0px 0px 7px #eee;
 }
 
 .button:not(:hover) span {
